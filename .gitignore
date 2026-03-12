@@ -1,0 +1,27 @@
+# Dependency directories
+node_modules/
+backend/__pycache__/
+backend/venv/
+
+# Environment variables
+.env
+.env.local
+
+# Build outputs
+dist/
+build/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project specific
+uploads/
+*.log
+test_output.txt
+test_report.pdf
+*.pyc
