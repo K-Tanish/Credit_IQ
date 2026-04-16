@@ -4,6 +4,14 @@
 
 CREDIT_IQ is a professional credit intelligence platform designed to automate the credit appraisal lifecycle for corporate borrowers. The system leverages artificial intelligence to ingest, classify, and cross-validate financial data from multiple sources, providing an auditable and explainable risk score.
 
+## UI 
+<img width="1280" height="1687" alt="Executive SWOT   Final Report - Finalized" src="https://github.com/user-attachments/assets/df3eaf5a-ada5-453c-9452-3c40050951db" />
+<img width="1280" height="1222" alt="Entity Onboarding (Beige)" src="https://github.com/user-attachments/assets/76c44e70-5c24-4f46-80fb-c7bc1de89265" />
+<img width="1280" height="1024" alt="Data Ingestion (Beige)" src="https://github.com/user-attachments/assets/36fbced2-b3db-4a37-940e-ee8feb836b02" />
+<img width="1280" height="1055" alt="Command Center" src="https://github.com/user-attachments/assets/55135811-24eb-46d8-bcb7-97d1b6e8c031" />
+<img width="1280" height="1024" alt="Processing - Beige Theme" src="https://github.com/user-attachments/assets/e273b8ce-70c6-4c98-8099-75d062905187" />
+
+
 ## Functional Pillars
 
 ### 1. Entity Onboarding
