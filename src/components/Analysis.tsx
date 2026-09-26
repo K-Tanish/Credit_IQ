@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Loader2, AlertCircle, Cpu, TrendingUp, Lightbulb, Zap, Download, CheckCircle2 } from 'lucide-react';
+import { apiUrl } from '../api';
 
 export const Analysis = ({ currentEntity }: { currentEntity: any }) => {
   const [data, setData] = useState<any>(null);
@@ -17,7 +18,7 @@ export const Analysis = ({ currentEntity }: { currentEntity: any }) => {
 
     const fetchAnalysis = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/analysis/${caseId}`);
+        const res = await fetch(apiUrl(`/api/v1/analysis/${caseId}`));
         if (!res.ok) throw new Error('Analysis not ready or case not found');
         const json = await res.json();
         setData(json);
@@ -33,7 +34,7 @@ export const Analysis = ({ currentEntity }: { currentEntity: any }) => {
 
   const handleDownload = () => {
     if (!caseId) return;
-    window.open(`http://localhost:8000/api/v1/analysis/${caseId}/report`, '_blank');
+    window.open(apiUrl(`/api/v1/analysis/${caseId}/report`), '_blank');
   };
 
   if (loading) return (

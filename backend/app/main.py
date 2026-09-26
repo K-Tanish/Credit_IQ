@@ -12,10 +12,15 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Credit_IQ (CAMS) API")
 
 # Enable CORS for the React frontend
+cors_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "*").split(",")
+    if origin.strip()
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=cors_origins,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

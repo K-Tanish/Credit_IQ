@@ -6,6 +6,7 @@ import {
   ChevronDown, Cpu, Zap, Database 
 } from 'lucide-react';
 import { UploadedDocument } from '../types';
+import { apiUrl } from '../api';
 
 const DOCUMENT_LABELS = [
   'ALM Report', 'Balance Sheet', 'Bank Statement', 'GST Return',
@@ -213,7 +214,7 @@ export const Upload = ({ onProcess, currentEntity }: { onProcess: () => void; cu
   useEffect(() => {
     if (!caseId || caseId === fetchedCaseId) return;
     setFetchedCaseId(caseId);
-    fetch(`http://localhost:8000/api/v1/documents/${caseId}`)
+    fetch(apiUrl(`/api/v1/documents/${caseId}`))
       .then(r => r.ok ? r.json() : [])
       .then(setDocs)
       .catch(() => {});
@@ -229,7 +230,7 @@ export const Upload = ({ onProcess, currentEntity }: { onProcess: () => void; cu
     try {
       const fd = new FormData();
       fd.append('file', file);
-      const res = await fetch(`http://localhost:8000/api/v1/documents/upload/${caseId}`, {
+      const res = await fetch(apiUrl(`/api/v1/documents/upload/${caseId}`), {
         method: 'POST',
         body: fd,
       });
@@ -241,7 +242,7 @@ export const Upload = ({ onProcess, currentEntity }: { onProcess: () => void; cu
       const newDoc: UploadedDocument = await res.json();
       setDocs(prev => [newDoc, ...prev]);
     } catch {
-      setError('Could not connect to backend. Make sure Docker is running.');
+      setError('Could not connect to the API. Please check that the service is available.');
     } finally {
       setUploading(false);
     }
@@ -253,7 +254,7 @@ export const Upload = ({ onProcess, currentEntity }: { onProcess: () => void; cu
   }, [uploadFile]);
 
   const handleReviewSave = async (id: string, payload: any) => {
-    const res = await fetch(`http://localhost:8000/api/v1/documents/${id}`, {
+    const res = await fetch(apiUrl(`/api/v1/documents/${id}`), {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 from ..models.document import Document
 from ..services.classifier import classifier
 
-UPLOADS_DIR = "uploads"
+UPLOADS_DIR = os.environ.get("UPLOADS_DIR", "uploads")
 os.makedirs(UPLOADS_DIR, exist_ok=True)
 
 # --- Supported MIME type groups ---

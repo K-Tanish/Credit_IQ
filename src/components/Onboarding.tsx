@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AlertCircle, X, TrendingUp, Landmark, ChevronRight, Loader2 } from 'lucide-react';
+import { apiUrl } from '../api';
 
 export const Onboarding = ({ onNext }: { onNext: (data: any) => void }) => {
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ export const Onboarding = ({ onNext }: { onNext: (data: any) => void }) => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/api/v1/entities/', {
+      const response = await fetch(apiUrl('/api/v1/entities/'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -61,7 +62,7 @@ export const Onboarding = ({ onNext }: { onNext: (data: any) => void }) => {
         }
       }
     } catch (error) {
-      setErrorMsg('Could not connect to backend. Make sure Docker is running (docker-compose up).');
+      setErrorMsg('Could not connect to the API. Please check that the service is available.');
     } finally {
       setLoading(false);
     }

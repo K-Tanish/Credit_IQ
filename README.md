@@ -81,6 +81,23 @@ The project includes a `docker-compose.yml` for containerized deployment:
 docker-compose up --build
 ```
 
+### Deploy to Vercel
+
+Vercel hosts the Vite frontend. The FastAPI backend, PostgreSQL database, and durable upload storage are deployed separately using the included `render.yaml` Blueprint. The backend loads a SentenceTransformer model and requires Tesseract plus persistent storage, so it is not deployed as a Vercel serverless function. The Render API instance, persistent disk, and database are paid resources; review their current costs before applying the Blueprint.
+
+1. Push this repository to GitHub, GitLab, or Bitbucket.
+2. In [Vercel](https://vercel.com/), select **Add New** > **Project**, import the repository, and deploy it. Use the repository root as the project root and the Vite framework preset. `vercel.json` configures `npm run build`, publishes `dist`, and sends frontend routes to `index.html`.
+3. Copy the deployed production URL, for example `https://credit-iq.vercel.app`.
+4. In [Render](https://render.com/), select **New** > **Blueprint**, connect the same repository and branch, review the API and database resources, then apply the Blueprint. When prompted for `CORS_ORIGINS`, enter the Vercel production origin exactly, without a trailing slash. Render builds the API and database; wait for the API service to become healthy.
+5. Copy the API service's public base URL from Render, such as `https://credit-iq-api.onrender.com`. Confirm that `<API_URL>/health` returns `{"status":"healthy"}`.
+6. In Vercel, open the project **Settings** > **Environment Variables**. Add `VITE_API_URL` with the Render API base URL (no trailing slash), at least for **Production**, then save.
+7. Open **Deployments**, redeploy the latest production deployment so Vite builds with `VITE_API_URL`, and test onboarding, document upload, and analysis.
+8. To enable AI-generated SWOT analysis, add `ANTHROPIC_API_KEY` and/or `OPENAI_API_KEY` to the `credit-iq-api` service's **Environment** settings in Render, then redeploy the API. Without either key, the app uses its built-in fallback analysis.
+
+For Vercel preview deployments, add each preview origin to Render's `CORS_ORIGINS` (comma-separated) and redeploy the API. Vite embeds `VITE_API_URL` at build time, so changing it also requires a new frontend deployment.
+
+**Security note:** this prototype does not implement user authentication or authorization. CORS only restricts browser origins and does not protect the API from direct requests. Do not upload real customer or confidential credit documents until authentication, authorization, and an appropriate data-protection review are in place.
+
 ## Project Structure
 
 - `backend/`: FastAPI application, database models, and AI services.
